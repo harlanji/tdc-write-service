@@ -11,19 +11,21 @@
 
 ; -- commands + model
 
+
 (def filez-path "/filez")
 
 (defn do-upload [request]
   (let [file (get (-> request :params) "file")
-         temp-file (:tempfile file)
-         dest-file (jio/as-file (str filez-path "/" (:filename file)))]
-  (jio/copy temp-file dest-file)
-  
-  (ring-res/response "A posted file! :)")))
+        temp-file (:tempfile file)
+        dest-file (jio/as-file (str filez-path "/" (:filename file)))]
+    (jio/copy temp-file dest-file)
+
+    (ring-res/response "A posted file! :)")))
 
 
 
 ; -- routes
+
 
 (defn upload-handler [request]
   (if (contains? (:params request) "file")
@@ -31,17 +33,17 @@
     (ring-res/response "Not a POST with file= :(")))
 
 (defn index-handler [request]
-  (let [response-body (html5 [:head 
-                               [:meta {:charset "UTF-8"}]]
-                            [:body 
-                               [:p (str/join (keys (-> request :params)))]])]
+  (let [response-body (html5 [:head
+                              [:meta {:charset "UTF-8"}]]
+                             [:body
+                              [:p (str/join (keys (-> request :params)))]])]
     (ring-res/response response-body)))
 
 (defn about-handler [request]
   (let [message (if-let [author (-> request :route-params :id)]
-    (str "Hello, " author "!")
-    "Hello, stranger :)")]
-  (ring-res/response message)))
+                  (str "Hello, " author "!")
+                  "Hello, stranger :)")]
+    (ring-res/response message)))
 
 ; -- run
 
@@ -49,13 +51,13 @@
   (let [app-resource-request (update request :uri #(str/replace % #"^/upload(.*)" "$1"))]
     (file-request app-resource-request "upload-app/resources/public")))
 
-(defonce routes ["/" 
+(defonce routes ["/"
                  {"index.html" index-handler
                   #"upload.*" {:post upload-handler
                                :get upload-app-handler}
                   ["about/" :id ".html"] about-handler}])
 
 (defonce ring-handler (-> (bidi-r/make-handler routes)
-                                         
-                                         wrap-params
-                                         wrap-multipart-params))
+
+                          wrap-params
+                          wrap-multipart-params))
