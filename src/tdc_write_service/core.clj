@@ -48,8 +48,11 @@
 ; -- run
 
 (defn upload-app-handler [request]
-  (let [app-resource-request (update request :uri #(str/replace % #"^/upload(.*)" "$1"))]
-    (file-request app-resource-request "upload-app/resources/public")))
+  (let [rewrite-uri #(str/replace % #"^/upload(.*)" "$1")
+        app-resource-request (update request :uri rewrite-uri)]
+    (or
+     (file-request app-resource-request filez-path)
+     (file-request app-resource-request "upload-app/resources/public"))))
 
 (defonce routes ["/"
                  {"index.html" index-handler
