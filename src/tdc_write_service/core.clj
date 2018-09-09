@@ -4,6 +4,7 @@
             [hiccup.page :refer [html5]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
+            [ring.middleware.file :refer [file-request]]
             [clojure.string :as str]
             [clojure.java.io :as jio]))
 
@@ -35,18 +36,24 @@
                             [:body [:p (str/join (keys (-> request :params)))]])))
 
 (defn about-handler [request]
-  (ring-res/response (if-let [author (-> request :route-params :id)]
+  (let [message (if-let [author (-> request :route-params :id)]
     (str "Hello, " author "!")
-    "Hello, stranger :)")))
-
+    "Hello, stranger :)")]
+  (ring-res/response message)))
 
 ; -- run
 
+(defn upload-app-handler [request]
+  (let [app-resource-request (update request :uri #(str/replace % #"^/upload(.*)" "$1"))]
+    (file-request app-resource-request "upload-app/resources/public")))
+
 (defonce routes ["/" 
                  {"index.html" index-handler
-                  "upload" upload-handler
+                  #"upload.*" {:post upload-handler
+                               :get upload-app-handler}
                   ["about/" :id ".html"] about-handler}])
 
 (defonce ring-handler (-> (bidi-r/make-handler routes)
+                                         
                                          wrap-params
                                          wrap-multipart-params))
