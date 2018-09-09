@@ -19,7 +19,8 @@
                  [reagent "0.7.0"]]
 
   :plugins [[lein-figwheel "0.5.16"]
-            [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
+            [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
+            [lein-cljfmt "0.6.0"]]
 
   :source-paths ["src"]
 

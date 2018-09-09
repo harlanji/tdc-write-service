@@ -10,7 +10,8 @@
                  [hiccup "1.0.5"]
                  ]
 
-  :plugins [[lein-ring "0.12.4"]]
+  :plugins [[lein-ring "0.12.4"]
+            [lein-cljfmt "0.6.0"]]
 
   :ring {:handler tdc-write-service.core/ring-handler}
 
