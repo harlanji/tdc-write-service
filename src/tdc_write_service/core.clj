@@ -31,8 +31,11 @@
     (ring-res/response "Not a POST with file= :(")))
 
 (defn index-handler [request]
-  (ring-res/response (html5 [:head [:meta {:charset "UTF-8"}]]
-                            [:body [:p (str/join (keys (-> request :params)))]])))
+  (let [response-body (html5 [:head 
+                               [:meta {:charset "UTF-8"}]]
+                            [:body 
+                               [:p (str/join (keys (-> request :params)))]])]
+    (ring-res/response response-body)))
 
 (defn about-handler [request]
   (let [message (if-let [author (-> request :route-params :id)]
