@@ -26,10 +26,9 @@
 ; -- routes
 
 (defn upload-handler [request]
-  (if (and (= :post (:request-method request))
-            (contains? (:params request) "file"))
-  (do-upload request)
-  (ring-res/response "Not a POST with file= :(")))
+  (if (contains? (:params request) "file")
+    (do-upload request)
+    (ring-res/response "Not a POST with file= :(")))
 
 (defn index-handler [request]
   (ring-res/response (html5 [:head [:meta {:charset "UTF-8"}]]
