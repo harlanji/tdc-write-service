@@ -1,6 +1,6 @@
 (ns upload-app.core
   (:require [reagent.core :as reagent :refer [atom]]
-            [baking-soda.bootstrap3 :as b3]))
+            [baking-soda.bootstrap3 :as bootstrap3]))
 
 (enable-console-print!)
 
@@ -13,7 +13,7 @@
 (defn hello-world []
   [:div
    [:h1 (:text @app-state)]
-   [b3/Button {:bs-style "primary"
+   [bootstrap3/Button {:bs-style "primary"
                :bs-size  "large"
                :on-click #(js/alert "hi")}
     "Launch demo modal"]
