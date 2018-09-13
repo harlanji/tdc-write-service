@@ -6,7 +6,8 @@
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [ring.middleware.file :refer [file-request]]
             [clojure.string :as str]
-            [clojure.java.io :as jio]))
+            [clojure.java.io :as jio]
+            [tdc-write-service.rules :as rules]))
 
 
 ; -- commands + model
@@ -55,10 +56,11 @@
      (file-request app-resource-request "upload-app/resources/public"))))
 
 (defonce routes ["/"
-                 {"index.html" index-handler
-                  #"upload.*" {:post upload-handler
-                               :get upload-app-handler}
-                  ["about/" :id ".html"] about-handler}])
+                 (merge rules/routes
+                   {"index.html" index-handler
+                    #"upload.*" {:post upload-handler
+                                 :get upload-app-handler}
+                    ["about/" :id ".html"] about-handler})])
 
 (defonce ring-handler (-> (bidi-r/make-handler routes)
 

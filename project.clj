@@ -8,6 +8,7 @@
                  [ring "1.6.3"]
                  [bidi "2.1.3"]
                  [hiccup "1.0.5"]
+                 [com.cerner/clara-rules "0.18.0"]
                  ]
 
   :plugins [[lein-ring "0.12.4"]
