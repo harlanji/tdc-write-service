@@ -9,9 +9,9 @@
 
 (defonce routes ["/"
                  (merge rules/routes
-                   upload/routes
-                   index/routes
-                   about/routes)])
+                        upload/routes
+                        index/routes
+                        about/routes)])
 
 (defonce ring-handler (-> (bidi-r/make-handler routes)
 

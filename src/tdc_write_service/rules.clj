@@ -1,7 +1,6 @@
 (ns tdc-write-service.rules
   (:require [ring.util.response :as ring-res]
             [clara.rules :as clara]))
-            
 
 (defrecord SupportRequest [client level])
 
@@ -18,16 +17,16 @@
   [SupportRequest (= ?client client)]
   [ClientRepresentative (= ?client client) (= ?name name)]
   =>
-  (println "Notify" ?name "that"  
-          ?client "has a new support request!"))
+  (println "Notify" ?name "that"
+           ?client "has a new support request!"))
 
 (defn run-rules-handler [request]
-  (-> 
-    (clara/mk-session 'tdc-write-service.core)
-    (clara/insert (->ClientRepresentative "Alice" "Acme")
-                  (->SupportRequest "Acme" :high))
-    (clara/fire-rules))
-    (ring-res/response "Ran the ruules"))
+  (->
+   (clara/mk-session 'tdc-write-service.core)
+   (clara/insert (->ClientRepresentative "Alice" "Acme")
+                 (->SupportRequest "Acme" :high))
+   (clara/fire-rules))
+  (ring-res/response "Ran the ruules"))
 
 ; -- commands + model
 
