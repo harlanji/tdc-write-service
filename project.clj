@@ -9,6 +9,8 @@
                  [bidi "2.1.3"]
                  [hiccup "1.0.5"]
                  [com.cerner/clara-rules "0.18.0"]
+                 [org.clojure/core.async  "0.4.474"]
+                 [com.cognitect/transit-clj "0.8.313"]
                  ]
 
   :plugins [[lein-ring "0.12.4"]

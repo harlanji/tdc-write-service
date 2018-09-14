@@ -14,9 +14,11 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]
+                 [cljs-http "0.1.45"]
                  [hiccup "1.0.5"]
                  [baking-soda "0.2.0"]
-                 [reagent "0.7.0"]]
+                 [reagent "0.7.0"]
+                 [com.cognitect/transit-cljs "0.8.256"]]
 
   :plugins [[lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
