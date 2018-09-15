@@ -18,17 +18,18 @@
                  [hiccup "1.0.5"]
                  [baking-soda "0.2.0"]
                  [reagent "0.7.0"]
+                 [com.cerner/clara-rules "0.18.0"]
                  [com.cognitect/transit-cljs "0.8.256"]]
 
   :plugins [[lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]
             [lein-cljfmt "0.6.0"]]
 
-  :source-paths ["src"]
+  :source-paths ["../rules-src"]
 
   :cljsbuild {:builds
               [{:id "dev"
-                :source-paths ["src"]
+                :source-paths ["src" "../rules-src"]
 
                 ;; The presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
@@ -105,7 +106,7 @@
                                   [figwheel-sidecar "0.5.16"]
                                   [cider/piggieback "0.3.1"]]
                    ;; need to add dev source path here to get user.clj loaded
-                   :source-paths ["src" "dev"]
+                   :source-paths ["src" "../rules-src" "dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}

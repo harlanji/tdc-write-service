@@ -4,7 +4,9 @@
             [baking-soda.bootstrap3 :as bootstrap3]
             [cljs-http.client :as http]
             [cljs.core.async :as async]
-            [cognitect.transit :as transit]))
+            [cognitect.transit :as transit]
+            [clara.rules :as clara]
+            [tdc-write-service.support-rules :as support-rules]))
 
 (enable-console-print!)
 
@@ -29,6 +31,16 @@
     (let [response (async/<! (http/get "/events"))]
       (js/alert (transit/read json-reader (:body response))))))
 
+
+(clara/defsession support-rules 'tdc-write-service.support-rules)
+
+(defn run-support-rules []
+  (-> support-rules
+   (clara/insert (support-rules/->ClientRepresentative "Alice" "Acme")
+                 (support-rules/->SupportRequest "Acme" :high))
+   (clara/fire-rules))
+  (js/alert "Ran the support ruules"))
+
 (defn hello-world []
   [:div
    [:h1 (:text @app-state)]
@@ -44,7 +56,10 @@
                        :bs-size  "large"
                        :on-click #(clear)}
     "Clear"]
-   [:h3 "Edit this and watch it change!"]])
+   [:h3 "Edit this and watch it change!"]
+   
+	[bootstrap3/Button {:on-click #(run-support-rules)} "Run rules"]   
+   ])
 
 (reagent/render-component [hello-world]
                           (. js/document (getElementById "app")))

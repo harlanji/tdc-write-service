@@ -11,10 +11,13 @@
 
 (def filez-path "/filez")
 
+(defn path [filename]
+  (str filez-path "/" filename))
+
 (defn do-upload [request]
   (let [file (get (-> request :params) "file")
         temp-file (:tempfile file)
-        dest-file (jio/as-file (str filez-path "/" (:filename file)))]
+        dest-file (jio/as-file (path (:filename file)))]
     (jio/copy temp-file dest-file)
 
     (ring-res/response "A posted file! :)")))

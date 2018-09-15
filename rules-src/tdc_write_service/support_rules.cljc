@@ -16,6 +16,5 @@
   [SupportRequest (= ?client client)]
   [ClientRepresentative (= ?client client) (= ?name name)]
   =>
-  (tdc-write-service.upload/path "")
   (println "Notify" ?name "that"
            ?client "has a new support request!"))

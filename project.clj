@@ -12,6 +12,8 @@
                  [org.clojure/core.async  "0.4.474"]
                  [com.cognitect/transit-clj "0.8.313"]
                  ]
+                 
+  :source-paths ["src" "rules-src"]
 
   :plugins [[lein-ring "0.12.4"]
             [lein-cljfmt "0.6.0"]]
