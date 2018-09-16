@@ -35,10 +35,7 @@
 (clara/defsession support-rules 'tdc-write-service.support-rules)
 
 (defn run-support-rules []
-  (-> support-rules
-   (clara/insert (support-rules/->ClientRepresentative "Alice" "Acme")
-                 (support-rules/->SupportRequest "Acme" :high))
-   (clara/fire-rules))
+  (support-rules/run-alice-example support-rules)
   (js/alert "Ran the support ruules"))
 
 (defn hello-world []

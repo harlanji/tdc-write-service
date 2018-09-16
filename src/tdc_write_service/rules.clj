@@ -4,11 +4,8 @@
             [clara.rules :as clara]))
 
 (defn run-rules-handler [request]
-  (->
-   (clara/mk-session 'tdc-write-service.support-rules)
-   (clara/insert (support-rules/->ClientRepresentative "Alice" "Acme")
-                 (support-rules/->SupportRequest "Acme" :high))
-   (clara/fire-rules))
+  (let [support-rules (clara/mk-session 'tdc-write-service.support-rules)]
+   (support-rules/run-alice-example support-rules))
   (ring-res/response "Ran the support ruules"))
 
 ; -- commands + model

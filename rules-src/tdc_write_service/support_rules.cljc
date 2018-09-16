@@ -18,3 +18,10 @@
   =>
   (println "Notify" ?name "that"
            ?client "has a new support request!"))
+
+
+(defn run-alice-example [support-rules]
+  (-> support-rules
+   (clara/insert (->ClientRepresentative "Alice" "Acme")
+                 (->SupportRequest "Acme" :high))
+   (clara/fire-rules)))
